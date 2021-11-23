@@ -68,7 +68,6 @@ def createproduct(request):
         'form': form,
     }
     if request.method == 'POST':
-        import pdb; pdb.set_trace()
         form = ProductForm(request.POST)
         if form.is_valid():
             form.cleaned_data['admin_id'] = admin.id
