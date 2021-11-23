@@ -8,7 +8,7 @@
   <p><a href="{% url 'index' %}">Return Home</a></p>
   <p class="log_out"><a href="{% url 'logout' %}">Log Out</a></p>
   {% if inv_sum %}
-    <p>There are {{ inv_sum }} items in your inventory.</p>
+    <p>There are {{ inv_sum }} items in your inventory that meet your current filter conditions.</p>
   {% endif %}
   
 
@@ -16,6 +16,7 @@
 <form action="" method="get">
 <p><label class="prop_label">Product ID</label><input type="text" id="product_id" name="product_id" value="{{ filter_product_id }}"/></p>
 <p><label class="prop_label">Sku</label><input type="text" id="sku" name="sku" value="{{ filter_sku }}"/></p>
+<p><label class="prop_label">Qty Below</label><input type="number" id="max_qty" name="max_qty" value="{{ filter_max_qty }}"/></p>
 <p><input type="submit" name="filter" value="Filter" /> &nbsp; <input type="submit" name="reset" value="Reset" /></p>
 </form>
 {% if inventory %}

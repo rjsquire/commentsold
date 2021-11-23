@@ -7,7 +7,6 @@
 You are viewing the detail for product: {{ product }}!
 <div class="product_detail">
 <form action="{% url 'product_edit' product.id %}" method="post">
-<!-- <form action='.' method="POST"> -->
         {% csrf_token %}
         {{ form.as_p }}
         <button style='margin-top:10px;' type='submit' >Save</button>

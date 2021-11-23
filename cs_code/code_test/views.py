@@ -66,6 +66,7 @@ def inventory(request):
     admin = Admin.objects.get(user_id=request.user.id)
     product_id = request.GET.get('product_id', None)
     sku = request.GET.get('sku', None)
+    max_qty = request.GET.get('max_qty', None)
     filter = request.GET.get('filter', None)
     reset = request.GET.get('reset', None)
     inventory = Inventory.objects.filter(product__admin=admin.id)
@@ -75,9 +76,12 @@ def inventory(request):
             inventory = inventory.filter(product_id=product_id)
         if sku:
             inventory = inventory.filter(sku=sku)
+        if max_qty:
+            inventory = inventory.filter(quantity__lte=max_qty)
     else:
         product_id = ''
         sku = ''
+        max_qty = ''
     inv_sum = inventory.aggregate(Sum('quantity'))
     template = loader.get_template('code_test/inventory.html')
     context = {
@@ -89,4 +93,6 @@ def inventory(request):
         context['filter_product_id'] = product_id
     if sku:
         context['filter_sku'] = sku
+    if max_qty:
+        context['filter_max_qty'] = max_qty
     return HttpResponse(template.render(context, request))
