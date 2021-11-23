@@ -9,12 +9,12 @@ You are viewing the detail for product: {{ product }}!
 <p><a href="{% url 'product_edit' product.id %}">Edit this product</a></p>
 
 <div class="product_detail">
-<span class="prop_label">Name:</span> <span class="prop_value">{{ product.product_name}}</span>
-<span class="prop_label">Description:</span> <span class="prop_value">{{ product.description}}</span>
-<span class="prop_label">Style:</span> <span class="prop_value">{{ product.style}}</span>
-<span class="prop_label">Brand:</span> <span class="prop_value">{{ product.brand}}</span>
-<span class="prop_label">Shipping Price:</span> <span class="prop_value">{{ product.shipping_price}}</span>
-<span class="prop_label">Note:</span> <span class="prop_value">{{ product.note}}</span>
+<p><span class="prop_label">Name:</span> <span class="prop_value">{{ product.product_name}}</span></p>
+<p><span class="prop_label">Description:</span> <span class="prop_value">{{ product.description}}</span></p>
+<p><span class="prop_label">Style:</span> <span class="prop_value">{{ product.style}}</span></p>
+<p><span class="prop_label">Brand:</span> <span class="prop_value">{{ product.brand}}</span></p>
+<p><span class="prop_label">Shipping Price:</span> <span class="prop_value">{{ product.shipping_price}}</span></p>
+<p><span class="prop_label">Note:</span> <span class="prop_value">{{ product.note}}</span></p>
 </div>
 {% else %}
 No product selected!

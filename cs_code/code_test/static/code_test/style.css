@@ -30,6 +30,7 @@ table.nospacing {
 
 .product_detail {
     margin: 25px 0 0 0;
+    width: 960px;
 }
 .prop_label, .product_detail label {
     width: 200px;

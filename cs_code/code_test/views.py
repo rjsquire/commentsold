@@ -44,7 +44,6 @@ def productedit(request, product_id):
         'product': product,
         'form': form,
     }
-    print('Form is bound: {}'.format(form.is_bound))
     if request.method == 'POST':
         form = ProductForm(request.POST, instance=product)
         form.save()
@@ -56,8 +55,26 @@ def productedit(request, product_id):
         else:
             for field in form:
                 print("Field Error:", field.name,  field.errors)
+ 
+    return HttpResponse(template.render(context, request))
 
-        
+
+@login_required
+def createproduct(request):
+    admin = Admin.objects.get(user_id=request.user.id)
+    template = loader.get_template('code_test/product_create.html')
+    form = ProductForm(initial={'admin': admin.id})
+    context = {
+        'form': form,
+    }
+    if request.method == 'POST':
+        import pdb; pdb.set_trace()
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.cleaned_data['admin_id'] = admin.id
+            product = form.save()
+            return redirect('product_detail', product.id)
+
     return HttpResponse(template.render(context, request))
 
 

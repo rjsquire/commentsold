@@ -3,7 +3,7 @@
 {% block title %}Products{% endblock %}
 
 {% block content %}
-{% if product %}
+
 You are viewing the detail for product: {{ product }}!
 <div class="product_detail">
 <form action="{% url 'product_edit' product.id %}" method="post">
@@ -15,8 +15,6 @@ You are viewing the detail for product: {{ product }}!
 <p><a href="{% url 'product_detail' product.id %}">Cancel</a></p>
 
 </div>
-{% else %}
-No product selected!
-{% endif %}
+
 <p><a href="{% url 'products_list' %}">Return to Products</a></p>
 {% endblock %}

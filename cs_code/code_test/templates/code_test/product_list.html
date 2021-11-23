@@ -7,8 +7,10 @@
   You are viewing your products {{ user.username }}!
   <p><a href="{% url 'index' %}">Return Home</a></p>
   <p class="log_out"><a href="{% url 'logout' %}">Log Out</a></p>
+  <p><a href="{% url 'product_create' %}">New Product</a></p>
 {% if product_list %}
 <h2>Products</h2>
+
 <table class="nospacing"><tr><th colspan="2"></th><th>Name</th><th>Style</th><th>Brand</th><th>Inventory</th></tr>
 {% for product in admin.product_set.all %}
     

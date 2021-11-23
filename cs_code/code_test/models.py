@@ -4,7 +4,7 @@ from django.db.models.fields import SmallIntegerField
 
 from django.contrib.auth.models import User
 
-from django.forms import ModelForm
+from django.forms import ModelForm, widgets, HiddenInput
 
 class BillingPlan(models.Model):
     billing_plan_name = models.CharField(max_length=255)
@@ -162,4 +162,6 @@ class ProductForm(ModelForm):
                   'url',
                   'product_type',
                   'shipping_price',
-                  'note',]
+                  'note',
+                  'admin',]
+        widgets = {'admin': HiddenInput()}
