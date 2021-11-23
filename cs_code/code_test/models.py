@@ -4,6 +4,7 @@ from django.db.models.fields import SmallIntegerField
 
 from django.contrib.auth.models import User
 
+from django.forms import ModelForm
 
 class BillingPlan(models.Model):
     billing_plan_name = models.CharField(max_length=255)
@@ -18,9 +19,9 @@ class Admin(models.Model):
     shop_name = models.CharField(max_length=255)
     remember_token = models.CharField(max_length=255, null=True)
     created_at = models.DateTimeField(editable=False, 
-                                      auto_now_add=False, 
+                                      auto_now_add=True, 
                                       auto_now=False)
-    updated_at = models.DateTimeField(auto_now=False,
+    updated_at = models.DateTimeField(auto_now=True,
                                       blank=True, 
                                       null=True)
     card_brand = models.CharField(max_length=255)
@@ -35,7 +36,7 @@ class Admin(models.Model):
 
 
     def __str__(self):
-        return f'{self.name} of {self.shop_name}'fr
+        return f'{self.name} of {self.shop_name}'
 
 class Brand(models.Model):
     brand_name = models.CharField(max_length=255)
@@ -66,16 +67,16 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand, 
                               on_delete=models.PROTECT)
     created_at = models.DateTimeField(editable=False, 
-                                      auto_now_add=False, 
+                                      auto_now_add=True, 
                                       auto_now=False)
-    updated_at = models.DateTimeField(auto_now=False,
+    updated_at = models.DateTimeField(auto_now=True,
                                       blank=True, 
                                       null=True)
-    url = models.TextField()
+    url = models.TextField(default='', blank=True)
     product_type = models.ForeignKey(ProductType, 
                                      on_delete=models.PROTECT)
     shipping_price = models.IntegerField()
-    note = models.TextField()
+    note = models.TextField(default='', blank=True)
     admin = models.ForeignKey(Admin, on_delete=PROTECT)
 
     def __str__(self):
@@ -136,9 +137,9 @@ class Order(models.Model):
     tracking_number = models.TextField()
     tax_total_cents = models.IntegerField()
     created_at = models.DateTimeField(editable=False, 
-                                      auto_now_add=False, 
+                                      auto_now_add=True, 
                                       auto_now=False)
-    updated_at = models.DateTimeField(auto_now=False,
+    updated_at = models.DateTimeField(auto_now=True,
                                       blank=True, 
                                       null=True)
 
@@ -148,3 +149,17 @@ class Order(models.Model):
                                     self.state,
                                     self.country_code,
                                     self.shipped_date)
+
+
+class ProductForm(ModelForm):
+    
+    class Meta:
+        model = Product
+        fields = ['product_name',
+                  'description',
+                  'style',
+                  'brand',
+                  'url',
+                  'product_type',
+                  'shipping_price',
+                  'note',]

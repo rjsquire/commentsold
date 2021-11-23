@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Home Base</title>
+    </head>
+    <body>
+        <h1>Hello, and welcome to Home Base!</h1>
+        {% if user.is_authenticated %}
+            <h2>You are longged in as: {{ user.username }}</h2>
+            <a href="{% url 'logout' %}">Log Out</a>
+        {% else %}
+            <h2>You are not logged in.</h2>
+            <a href="{% url 'login' %}">Log In</a>
+        {% endif %}
+    </body>
+</html>

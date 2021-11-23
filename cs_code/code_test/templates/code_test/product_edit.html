@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+{% if product %}
+You are viewing the detail for product: {{ product }}!
+<div class="product_detail">
+<form action="{% url 'product_edit' product.id %}" method="post">
+<!-- <form action='.' method="POST"> -->
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button style='margin-top:10px;' type='submit' >Save</button>
+    </form>
+
+<p><a href="{% url 'product_detail' product.id %}">Cancel</a></p>
+
+</div>
+{% else %}
+No product selected!
+{% endif %}
+<p><a href="{% url 'products_list' %}">Return to Products</a></p>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+
+  You are viewing your products {{ user.username }}!
+  <p><a href="{% url 'index' %}">Return Home</a></p>
+  <p class="log_out"><a href="{% url 'logout' %}">Log Out</a></p>
+{% if product_list %}
+<h2>Products</h2>
+<table class="nospacing"><tr><th colspan="2"></th><th>Name</th><th>Style</th><th>Brand</th><th>Inventory</th></tr>
+{% for product in admin.product_set.all %}
+    
+        <tr><td><a href="{% url 'product_detail'  product.id %}">detail</a></td>
+        <td><a href="{% url 'product_edit' product.id %}">edit</a></td>
+        <td>{{ product.product_name }} </td><td> {{ product.style }} </td><td> {{ product.brand }} </td>
+        <td>
+        {% if product.inventory_set.all %}
+        <table class="nospacing"><tr><th>Qty</th><th>Color</th><th>Size</th><th>Sku</th></tr>
+        {% for sku in product.inventory_set.all %}
+        <tr><td class="sku_qty">{{ sku.quantity }}</td>
+        <td class="sku_color">{{ sku.color }}</td>
+        <td class="sku_size">{{ sku.size }}</td>
+        <td class="sku_sku">{{ sku.sku }}</td></tr>
+        {% endfor %}
+        </table>
+        {% else %}
+        &nbsp;
+        {% endif %}
+        </td></tr>
+    
+{% endfor %}
+</table>
+{% else %}
+    <p>No products available</p>
+{% endif %}
+{% endblock %}

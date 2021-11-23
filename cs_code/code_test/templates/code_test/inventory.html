@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+
+  You are viewing your inventory {{ user.username }}!
+  <p><a href="{% url 'index' %}">Return Home</a></p>
+  <p class="log_out"><a href="{% url 'logout' %}">Log Out</a></p>
+  {% if inv_sum %}
+    <p>There are {{ inv_sum }} items in your inventory.</p>
+  {% endif %}
+  
+
+<h2>Inventory</h2>
+<form action="" method="get">
+<p><label class="prop_label">Product ID</label><input type="text" id="product_id" name="product_id" value="{{ filter_product_id }}"/></p>
+<p><label class="prop_label">Sku</label><input type="text" id="sku" name="sku" value="{{ filter_sku }}"/></p>
+<p><input type="submit" name="filter" value="Filter" /> &nbsp; <input type="submit" name="reset" value="Reset" /></p>
+</form>
+{% if inventory %}
+<table class="nospacing">
+<tr>
+<th>Product Name</th>
+<th>Sku</th>
+<th>Quantity</th>
+<th>Color</th>
+<th>Size</th>
+<th>Price</th>
+<th>Cost</th>
+</tr>
+
+{% for item in inventory %}
+    <tr>
+    <td>{{ item.product.product_name }}</td>
+    <td>{{ item.sku }}</td>
+    <td>{{ item.quantity }}</td>
+    <td>{{ item.color }}</td>
+    <td>{{ item.size }}</td>
+    <td>{{ item.price_cents }}</td>
+    <td>{{ item.cost_cents }}</td>
+    </tr>
+{% endfor %}
+</table>
+{% else %}
+    <p>No products available</p>
+{% endif %}
+{% endblock %}
