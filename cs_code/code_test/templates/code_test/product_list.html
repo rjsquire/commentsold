@@ -12,19 +12,25 @@
 <h2>Products</h2>
 
 <table class="nospacing"><tr><th colspan="2"></th><th>Name</th><th>Style</th><th>Brand</th><th>Inventory</th></tr>
-{% for product in admin.product_set.all %}
+{% for product in product_list %}
     
         <tr><td><a href="{% url 'product_detail'  product.id %}">detail</a></td>
         <td><a href="{% url 'product_edit' product.id %}">edit</a></td>
-        <td>{{ product.product_name }} </td><td> {{ product.style }} </td><td> {{ product.brand }} </td>
+        <td>{{ product.product_name }} 
+        {% if product.inventory_set.all %} 
+        <br> Potential Revenue: {{ product.potential_revenue }}
+        {% endif %}
+        </td><td> {{ product.style }} </td><td> {{ product.brand }} </td>
         <td>
         {% if product.inventory_set.all %}
-        <table class="nospacing"><tr><th>Qty</th><th>Color</th><th>Size</th><th>Sku</th></tr>
+        <a href="{% url 'inventory'  %}?product_id={{product.id}}&filter=Filter">Open inventory</a>
+        <table class="nospacing"><tr><th>Qty</th><th>Color</th><th>Size</th><th>Sku</th><th>Price</th></tr>
         {% for sku in product.inventory_set.all %}
         <tr><td class="sku_qty">{{ sku.quantity }}</td>
         <td class="sku_color">{{ sku.color }}</td>
         <td class="sku_size">{{ sku.size }}</td>
-        <td class="sku_sku">{{ sku.sku }}</td></tr>
+        <td class="sku_sku">{{ sku.sku }}</td>
+        <td class="sku_sku">{{ sku.price_cents }}</td></tr>
         {% endfor %}
         </table>
         {% else %}

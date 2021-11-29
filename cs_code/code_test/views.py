@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template import context, loader
-from django.db.models import Sum
+from django.db.models import Sum, F
 
 
 from .models import *
@@ -15,9 +15,14 @@ def index(request):
 @login_required
 def products(request):
     admin = Admin.objects.get(user_id=request.user.id)
-    product_list = Product.objects.filter(admin_id=admin.id)
+    product_list = Product.objects.filter(admin_id=admin.id).annotate(potential_revenue=Sum(
+                    F('inventory__quantity') * 
+                    F('inventory__price_cents'),   
+                    output_field=models.IntegerField()
+                ))
+    print(product_list.query)
     template = loader.get_template('code_test/product_list.html')
-    # return render(request, 'code_test/product_list.html')
+    
     context = {
         'product_list': product_list,
         'admin': admin,
